@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {green500, green800, redA400, grey800} from 'material-ui/styles/colors';
+import {green500, green800, redA400, grey800, blue500, redA700} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -12,11 +12,13 @@ import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import HardwareComputer from 'material-ui/svg-icons/hardware/computer';
+import PlayingCard from './PlayingCard';
+import ApplicationStore from '../stores/ApplicationStore';
 
 const muiTheme = getMuiTheme({
     palette: {
-        primary1Color: green500,
-        accent1Color: green800,
+        primary1Color: blue500,
+        accent1Color: redA700,
     }
 });
 
@@ -63,9 +65,15 @@ class App extends Component{
     constructor(props, context){
         super(props, context);
         this.handleToggleDrawer = this.handleToggleDrawer.bind(this);
-        this.state = {
-            drawerOpen: false
-        }
+        this.state = ApplicationStore.getState();
+    }
+
+    componentDidMount(){
+        ApplicationStore.listen((state) => this.onChange(state));
+    }
+
+    componentWillUnmount(){
+        ApplicationStore.unlisten((state) => this.onChange(state));
     }
 
     handleToggleDrawer() {
@@ -78,6 +86,10 @@ class App extends Component{
         this.setState({
             drawerOpen: false,
         });
+    }
+
+    onChange(state){
+        this.setState(state);
     }
 
     render(){
@@ -102,60 +114,34 @@ class App extends Component{
                             </Paper>
                         </div>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.black_suit}>A&spades;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.holeCards[0]}/>
                         </div>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.red_suit}>7&hearts;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.holeCards[1]}/>
                         </div>
                     </div>
                     <Divider/>
+                    
 
                     <div style={styles.card_row}>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.black_suit}>7&spades;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.communityCards[0]}/>
                         </div>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.red_suit}>2&diams;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.communityCards[1]}/>
                         </div>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.black_suit}>J&spades;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.communityCards[2]}/>
                         </div>
+
                     </div>
 
                     <div style={styles.card_row}>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.black_suit}>J&clubs;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.communityCards[3]}/>
                         </div>
                         <div style={styles.card_slot}>
-                            <Paper style={styles.card} zDepth={2}>
-                                <div style={styles.card_contents}>
-                                    <span style={styles.red_suit}>Q&hearts;</span>
-                                </div>
-                            </Paper>
+                            <PlayingCard card={this.state.communityCards[4]}/>
                         </div>
                         <div style={styles.card_slot}>
                             <Paper style={styles.card} zDepth={0}>

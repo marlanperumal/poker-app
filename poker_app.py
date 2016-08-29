@@ -62,6 +62,7 @@ def api_handprob_short_code(short_code):
 
 @app.route("/api/handprob", methods=["POST"])
 def api_handprob():
+    print(request.headers)
     if request.headers["Content-Type"] == "application/json":
         data = request.json
         num_players = None
