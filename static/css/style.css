@@ -1,14 +1,31 @@
 .card-back {
 	background: #2196f3;
 	background: 
-	linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
-	linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
-	linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 5px -10px,
-	linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 5px -10px,
-	#2196f3;
+		linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
+		linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
+		linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 5px -10px,
+		linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 5px -10px,
+		#2196f3;
 	background-size: 10px 20px
 }
 
 .red-suit {
 	color: #FF1744;
+}
+
+.select-suit-container > span {
+	font-size: 40px;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	margin: 0px 10px 0px 0px;
+	display: inline-block;
+	cursor: pointer;
+	border: solid 1px black;
+	border-radius: 4px;
+}
+
+.select-suit-container > span[data-selected="true"] {
+	background-color: #DDD;
 }

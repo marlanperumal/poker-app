@@ -5,6 +5,11 @@ class ApplicationStore {
 	constructor(){
 		this.holeCards = [];
 		this.communityCards = [];
+		this.numPlayers = 5;
+		this.result = {
+			win_percent: 0.25,
+			rhs: 1
+		}
 
 		for (var i = 0; i < 2; i++){
 			this.holeCards.push({
@@ -30,6 +35,8 @@ class ApplicationStore {
 			onCloseCardSelector: CardActions.closeCardSelector,
 			onChangeRank: CardActions.changeRank,
 			onChangeSuit: CardActions.changeSuit,
+			onRunSim: CardActions.runSim,
+			onUpdateResults: CardActions.updateResults,
 		});
 	}
 
@@ -57,6 +64,15 @@ class ApplicationStore {
 
 	onChangeSuit(params){
 		params.card.suit = params.value;
+	}
+
+	onRunSim(params){
+
+	}
+
+	onUpdateResults(params){
+		this.result.win_percent = params["win percentage"];
+		this.result.rhs = params["relative hand strength"];
 	}
 
 }

@@ -117,30 +117,41 @@ class PlayingCard extends Component{
 			        	open={this.props.card.cardSelectorOpen}
 			        >
 			        	<div>
-				        	<SelectField 
-				        		floatingLabelText="Rank"
-				        		floatingLabelFixed={true}
-				        		hintText="Ace"
-				        		value={this.props.card.rank}
-				        		onChange={(event, index, value) => this._changeRank(value)}
-				        		style={{width:220}}
-				        	>
-				        		<MenuItem key={1} value={"Ace"} primaryText="Ace" secondaryText="A"/>
-				        		<MenuItem key={2} value={"King"} primaryText="King" secondaryText="K"/>
-				        		<MenuItem key={3} value={"Queen"} primaryText="Queen" secondaryText="Q"/>
-				        		<MenuItem key={4} value={"Jack"} primaryText="Jack" secondaryText="J"/>
-				        		<MenuItem key={5} value={"Ten"} primaryText="Ten" secondaryText="10"/>
-				        		<MenuItem key={6} value={"Nine"} primaryText="Nine" secondaryText="9"/>
-				        		<MenuItem key={7} value={"Eight"} primaryText="Eight" secondaryText="8"/>
-				        		<MenuItem key={8} value={"Seven"} primaryText="Seven" secondaryText="7"/>
-				        		<MenuItem key={9} value={"Six"} primaryText="Six" secondaryText="6"/>
-				        		<MenuItem key={10} value={"Five"} primaryText="Five" secondaryText="5"/>
-				        		<MenuItem key={11} value={"Four"} primaryText="Four" secondaryText="4"/>
-				        		<MenuItem key={12} value={"Three"} primaryText="Three" secondaryText="3"/>
-				        		<MenuItem key={13} value={"Two"} primaryText="Two" secondaryText="2"/>
-				        		
-				        	</SelectField>
-				        	<br/>
+			        		<div>
+					        	<SelectField 
+					        		floatingLabelText="Rank"
+					        		floatingLabelFixed={true}
+					        		hintText="Ace"
+					        		value={this.props.card.rank}
+					        		onChange={(event, index, value) => this._changeRank(value)}
+					        		style={{width:220}}
+					        	>
+					        		<MenuItem key={1} value={"Ace"} secondaryText="Ace" primaryText="A"/>
+					        		<MenuItem key={2} value={"King"} secondaryText="King" primaryText="K"/>
+					        		<MenuItem key={3} value={"Queen"} secondaryText="Queen" primaryText="Q"/>
+					        		<MenuItem key={4} value={"Jack"} secondaryText="Jack" primaryText="J"/>
+					        		<MenuItem key={5} value={"Ten"} secondaryText="Ten" primaryText="10"/>
+					        		<MenuItem key={6} value={"Nine"} secondaryText="Nine" primaryText="9"/>
+					        		<MenuItem key={7} value={"Eight"} secondaryText="Eight" primaryText="8"/>
+					        		<MenuItem key={8} value={"Seven"} secondaryText="Seven" primaryText="7"/>
+					        		<MenuItem key={9} value={"Six"} secondaryText="Six" primaryText="6"/>
+					        		<MenuItem key={10} value={"Five"} secondaryText="Five" primaryText="5"/>
+					        		<MenuItem key={11} value={"Four"} secondaryText="Four" primaryText="4"/>
+					        		<MenuItem key={12} value={"Three"} secondaryText="Three" primaryText="3"/>
+					        		<MenuItem key={13} value={"Two"} secondaryText="Two" primaryText="2"/>
+					        	</SelectField>
+				        	</div>
+				        	{
+				        	// <div className="select-suit-container">
+			        		// 	<span data-selected={this.props.card.suit == "Diamonds"} data-value={"Diamonds"}>&diams;</span>
+			        		// 	<span data-selected={this.props.card.suit == "Hearts"} data-value={"Hearts"}>&hearts;</span>
+			        		// 	<span data-selected={this.props.card.suit == "Clubs"} data-value={"Clubs"}>&clubs;</span>
+			        		// 	<span data-selected={this.props.card.suit == "Spades"} data-value={"Spades"}>&spades;</span>
+			        		// </div>
+		        			}
+
+
+				        	
 				        	<SelectField 
 				        		floatingLabelText="Suit"
 				        		floatingLabelFixed={true}
@@ -155,7 +166,6 @@ class PlayingCard extends Component{
 				        		<MenuItem key={4} value={"Spades"} primaryText="Spades" secondaryText="&spades;"/>
 				        	</SelectField>
 				        	
-
 			        	</div>
 			        </Dialog>
 		        </div>

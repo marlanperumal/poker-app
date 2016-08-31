@@ -21863,6 +21863,10 @@
 
 	var _ApplicationStore2 = _interopRequireDefault(_ApplicationStore);
 
+	var _CardActions = __webpack_require__(418);
+
+	var _CardActions2 = _interopRequireDefault(_CardActions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21921,7 +21925,7 @@
 	    function App(props, context) {
 	        _classCallCheck(this, App);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props, context));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props, context));
 
 	        _this.handleToggleDrawer = _this.handleToggleDrawer.bind(_this);
 	        _this.state = _ApplicationStore2.default.getState();
@@ -21961,6 +21965,11 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleRunSim',
+	        value: function handleRunSim() {
+	            _CardActions2.default.runSim({ holeCards: this.state.holeCards, communityCards: this.state.communityCards, numPlayers: this.state.numPlayers });
+	        }
+	    }, {
 	        key: 'onChange',
 	        value: function onChange(state) {
 	            this.setState(state);
@@ -21968,8 +21977,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
-
 	            return _react2.default.createElement(
 	                _MuiThemeProvider2.default,
 	                { muiTheme: muiTheme },
@@ -21977,26 +21984,6 @@
 	                    'div',
 	                    null,
 	                    _react2.default.createElement(_AppBar2.default, { title: 'Poker Simulator', onLeftIconButtonTouchTap: this.handleToggleDrawer }),
-	                    _react2.default.createElement(
-	                        _Drawer2.default,
-	                        {
-	                            open: this.state.drawerOpen,
-	                            docked: false,
-	                            onRequestChange: function onRequestChange(drawerOpen) {
-	                                return _this4.setState({ drawerOpen: drawerOpen });
-	                            }
-	                        },
-	                        _react2.default.createElement(
-	                            _MenuItem2.default,
-	                            null,
-	                            'Item 1'
-	                        ),
-	                        _react2.default.createElement(
-	                            _MenuItem2.default,
-	                            null,
-	                            'Item 2'
-	                        )
-	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { style: styles.card_row },
@@ -22009,17 +21996,20 @@
 	                                _react2.default.createElement(
 	                                    _Chip2.default,
 	                                    { style: styles.chip },
-	                                    '4 Players'
+	                                    this.state.numPlayers,
+	                                    ' Players'
 	                                ),
 	                                _react2.default.createElement(
 	                                    _Chip2.default,
 	                                    { style: styles.chip },
-	                                    'Win%: 43'
+	                                    'Win%: ',
+	                                    (this.state.result.win_percent * 100).toPrecision(2)
 	                                ),
 	                                _react2.default.createElement(
 	                                    _Chip2.default,
 	                                    { style: styles.chip },
-	                                    'RHS: 2.14'
+	                                    'RHS: ',
+	                                    this.state.result.rhs.toPrecision(3)
 	                                )
 	                            )
 	                        ),
@@ -22078,7 +22068,7 @@
 	                                    { style: styles.card_contents },
 	                                    _react2.default.createElement(
 	                                        _FloatingActionButton2.default,
-	                                        { style: styles.fab, size: 50 },
+	                                        { onTouchTap: this.handleRunSim.bind(this), style: styles.fab, size: 50 },
 	                                        _react2.default.createElement(_computer2.default, null)
 	                                    )
 	                                )
@@ -38926,7 +38916,7 @@
 		function PlayingCard(props, context) {
 			_classCallCheck(this, PlayingCard);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayingCard).call(this, props, context));
+			var _this = _possibleConstructorReturn(this, (PlayingCard.__proto__ || Object.getPrototypeOf(PlayingCard)).call(this, props, context));
 
 			_this.styles = {
 				card: {
@@ -39066,32 +39056,35 @@
 								'div',
 								null,
 								_react2.default.createElement(
-									_SelectField2.default,
-									{
-										floatingLabelText: 'Rank',
-										floatingLabelFixed: true,
-										hintText: 'Ace',
-										value: this.props.card.rank,
-										onChange: function onChange(event, index, value) {
-											return _this2._changeRank(value);
+									'div',
+									null,
+									_react2.default.createElement(
+										_SelectField2.default,
+										{
+											floatingLabelText: 'Rank',
+											floatingLabelFixed: true,
+											hintText: 'Ace',
+											value: this.props.card.rank,
+											onChange: function onChange(event, index, value) {
+												return _this2._changeRank(value);
+											},
+											style: { width: 220 }
 										},
-										style: { width: 220 }
-									},
-									_react2.default.createElement(_MenuItem2.default, { key: 1, value: "Ace", primaryText: 'Ace', secondaryText: 'A' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 2, value: "King", primaryText: 'King', secondaryText: 'K' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 3, value: "Queen", primaryText: 'Queen', secondaryText: 'Q' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 4, value: "Jack", primaryText: 'Jack', secondaryText: 'J' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 5, value: "Ten", primaryText: 'Ten', secondaryText: '10' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 6, value: "Nine", primaryText: 'Nine', secondaryText: '9' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 7, value: "Eight", primaryText: 'Eight', secondaryText: '8' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 8, value: "Seven", primaryText: 'Seven', secondaryText: '7' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 9, value: "Six", primaryText: 'Six', secondaryText: '6' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 10, value: "Five", primaryText: 'Five', secondaryText: '5' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 11, value: "Four", primaryText: 'Four', secondaryText: '4' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 12, value: "Three", primaryText: 'Three', secondaryText: '3' }),
-									_react2.default.createElement(_MenuItem2.default, { key: 13, value: "Two", primaryText: 'Two', secondaryText: '2' })
+										_react2.default.createElement(_MenuItem2.default, { key: 1, value: "Ace", secondaryText: 'Ace', primaryText: 'A' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 2, value: "King", secondaryText: 'King', primaryText: 'K' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 3, value: "Queen", secondaryText: 'Queen', primaryText: 'Q' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 4, value: "Jack", secondaryText: 'Jack', primaryText: 'J' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 5, value: "Ten", secondaryText: 'Ten', primaryText: '10' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 6, value: "Nine", secondaryText: 'Nine', primaryText: '9' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 7, value: "Eight", secondaryText: 'Eight', primaryText: '8' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 8, value: "Seven", secondaryText: 'Seven', primaryText: '7' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 9, value: "Six", secondaryText: 'Six', primaryText: '6' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 10, value: "Five", secondaryText: 'Five', primaryText: '5' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 11, value: "Four", secondaryText: 'Four', primaryText: '4' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 12, value: "Three", secondaryText: 'Three', primaryText: '3' }),
+										_react2.default.createElement(_MenuItem2.default, { key: 13, value: "Two", secondaryText: 'Two', primaryText: '2' })
+									)
 								),
-								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									_SelectField2.default,
 									{
@@ -39205,6 +39198,54 @@
 			key: 'changeSuit',
 			value: function changeSuit(params) {
 				return params;
+			}
+		}, {
+			key: 'updateResults',
+			value: function updateResults(params) {
+				return params;
+			}
+		}, {
+			key: 'runSim',
+			value: function runSim(params) {
+				var holeCards = params.holeCards.map(function (card) {
+					if (card.revealed) {
+						return [card.rank, card.suit];
+					}
+				});
+				var communityCards = params.communityCards.map(function (card) {
+					if (card.revealed) {
+						return [card.rank, card.suit];
+					}
+				});
+				holeCards = holeCards.filter(function (card) {
+					return card !== undefined;
+				});
+				communityCards = communityCards.filter(function (card) {
+					return card !== undefined;
+				});
+				console.log(holeCards);
+				console.log(communityCards);
+				var req = {
+					hole_cards: holeCards,
+					community_cards: communityCards,
+					num_players: params.numPlayers
+				};
+				var self = this;
+				fetch("/api/handprob", {
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					method: "POST",
+					body: JSON.stringify(req)
+				}).then(function (res) {
+					return res.json();
+				}).then(function (j) {
+					self.updateResults(j);
+				}).catch(function (res) {
+					console.log(res);
+				});
+				return {};
 			}
 		}]);
 
@@ -44247,6 +44288,11 @@
 
 			this.holeCards = [];
 			this.communityCards = [];
+			this.numPlayers = 5;
+			this.result = {
+				win_percent: 0.25,
+				rhs: 1
+			};
 
 			for (var i = 0; i < 2; i++) {
 				this.holeCards.push({
@@ -44271,7 +44317,9 @@
 				onOpenCardSelector: _CardActions2.default.openCardSelector,
 				onCloseCardSelector: _CardActions2.default.closeCardSelector,
 				onChangeRank: _CardActions2.default.changeRank,
-				onChangeSuit: _CardActions2.default.changeSuit
+				onChangeSuit: _CardActions2.default.changeSuit,
+				onRunSim: _CardActions2.default.runSim,
+				onUpdateResults: _CardActions2.default.updateResults
 			});
 		}
 
@@ -44305,6 +44353,15 @@
 			key: 'onChangeSuit',
 			value: function onChangeSuit(params) {
 				params.card.suit = params.value;
+			}
+		}, {
+			key: 'onRunSim',
+			value: function onRunSim(params) {}
+		}, {
+			key: 'onUpdateResults',
+			value: function onUpdateResults(params) {
+				this.result.win_percent = params["win percentage"];
+				this.result.rhs = params["relative hand strength"];
 			}
 		}]);
 
