@@ -5,9 +5,14 @@ import {green500, green800, redA400, grey800, blue500, redA700} from 'material-u
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import {ListItem} from 'material-ui/List';
+import Popover from 'material-ui/Popover';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -16,6 +21,7 @@ import PlayingCard from './PlayingCard';
 import CardSelector from './CardSelector';
 import ApplicationStore from '../stores/ApplicationStore';
 import CardActions from '../actions/CardActions';
+import AppActions from '../actions/AppActions';
 
 const muiTheme = getMuiTheme({
     palette: {
@@ -69,19 +75,27 @@ class App extends Component{
     }
 
     handleToggleDrawer() {
-        this.setState({
-            drawerOpen: !this.state.drawerOpen,
+        AppActions.toggleDrawer({});
+    }
+
+    handleClearHand(){
+        AppActions.clearHand({
+            holeCards: this.state.holeCards, 
+            communityCards: this.state.communityCards, 
+            numPlayers: this.state.numPlayers
         });
     }
 
-    handleCloseDrawer() {
-        this.setState({
-            drawerOpen: false,
+    handleChangeNumPlayers(value){
+        AppActions.changeNumPlayers({
+            holeCards: this.state.holeCards, 
+            communityCards: this.state.communityCards, 
+            numPlayers: value
         });
     }
 
     handleRunSim(){
-        CardActions.runSim({
+        AppActions.runSim({
             holeCards: this.state.holeCards, 
             communityCards: this.state.communityCards, 
             numPlayers: this.state.numPlayers
@@ -97,6 +111,31 @@ class App extends Component{
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <AppBar title="Poker Simulator" onLeftIconButtonTouchTap={this.handleToggleDrawer}/>
+                    <Drawer 
+                        open={this.state.drawer.open} 
+                        docked={false}
+                        onRequestChange={() => this.handleToggleDrawer()}
+                    >
+                        <ListItem 
+                            leftAvatar={<Avatar>M</Avatar>}
+                            primaryText="Marlan"
+                            disabled={true}
+                        />
+                        <Divider/>
+                        <Subheader>Current Hand</Subheader>
+                        <MenuItem onTouchTap={() => this.handleClearHand()}>Clear Hand</MenuItem>
+                        <DropDownMenu value={this.state.numPlayers} onChange={(event, index, value) => this.handleChangeNumPlayers(value)}>
+                            <MenuItem value={6} primaryText="6 Players"/>
+                            <MenuItem value={5} primaryText="5 Players"/>
+                            <MenuItem value={4} primaryText="4 Players"/>
+                            <MenuItem value={3} primaryText="3 Players"/>
+                            <MenuItem value={2} primaryText="2 Players"/>
+                        </DropDownMenu>
+                        
+                        <Divider/>
+                        <Subheader>Profile</Subheader>
+                        <ListItem>Change Name</ListItem>
+                    </Drawer>
                     <CardSelector cardSelector={this.state.cardSelector} />
                     <div style={styles.card_row}>
                         <div style={styles.card_slot}>
