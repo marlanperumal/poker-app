@@ -19,6 +19,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import HardwareComputer from 'material-ui/svg-icons/hardware/computer';
 import PlayingCard from './PlayingCard';
 import CardSelector from './CardSelector';
+import NameInput from './NameInput';
 import ApplicationStore from '../stores/ApplicationStore';
 import CardActions from '../actions/CardActions';
 import AppActions from '../actions/AppActions';
@@ -94,6 +95,10 @@ class App extends Component{
         });
     }
 
+    handleChangeName(){
+        AppActions.openNameInput({})
+    }
+
     handleRunSim(){
         AppActions.runSim({
             holeCards: this.state.holeCards, 
@@ -117,8 +122,8 @@ class App extends Component{
                         onRequestChange={() => this.handleToggleDrawer()}
                     >
                         <ListItem 
-                            leftAvatar={<Avatar>M</Avatar>}
-                            primaryText="Marlan"
+                            leftAvatar={<Avatar>{this.state.player.name ? this.state.player.name[0].toUpperCase() : "?"}</Avatar>}
+                            primaryText={this.state.player.name ? this.state.player.name : "Anonymous"}
                             disabled={true}
                         />
                         <Divider/>
@@ -134,9 +139,10 @@ class App extends Component{
                         
                         <Divider/>
                         <Subheader>Profile</Subheader>
-                        <ListItem>Change Name</ListItem>
+                        <MenuItem onTouchTap={() => this.handleChangeName()}>Change Name</MenuItem>
                     </Drawer>
                     <CardSelector cardSelector={this.state.cardSelector} />
+                    <NameInput nameInput={this.state.nameInput} />
                     <div style={styles.card_row}>
                         <div style={styles.card_slot}>
                             <Paper style={styles.card} zDepth={0}>

@@ -4,6 +4,13 @@ import AppActions from '../actions/AppActions';
 
 class ApplicationStore {
 	constructor(){
+		this.player = {
+			name: undefined,
+		};
+		this.nameInput = {
+			open: false,
+			name: undefined
+		}
 		this.holeCards = [];
 		this.communityCards = [];
 		this.numPlayers = 5;
@@ -46,7 +53,10 @@ class ApplicationStore {
 			onUpdateResults: AppActions.updateResults,
 			onToggleDrawer: AppActions.toggleDrawer,
 			onClearHand: AppActions.clearHand,
-			onChangeNumPlayers: AppActions.changeNumPlayers
+			onChangeNumPlayers: AppActions.changeNumPlayers,
+			onChangeName: AppActions.changeName,
+			onCloseNameInput: AppActions.closeNameInput,
+			onOpenNameInput: AppActions.openNameInput
 		});
 	}
 
@@ -122,6 +132,27 @@ class ApplicationStore {
 	onChangeNumPlayers(params){
 		this.numPlayers = params.numPlayers;
 		this.drawer.open = false;
+	}
+
+	onChangeName(params){
+		if (params.name.length > 0){
+			this.player.name = params.name;
+			this.nameInput.open = false;	
+		}
+		else{
+			this.nameInput.error = "Name cannot be blank";
+		}
+		
+	}
+
+	onCloseNameInput(params){
+		this.nameInput.open = false;
+		this.nameInput.error = undefined;
+	}
+
+	onOpenNameInput(params){
+		this.nameInput.open = true;
+		this.nameInput.error = undefined;
 	}
 
 }

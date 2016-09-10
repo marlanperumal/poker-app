@@ -15,6 +15,18 @@ class AppActions {
 		return params;
 	}
 
+	changeName(params){
+		return params;
+	}
+
+	openNameInput(params){
+		return params;
+	}
+
+	closeNameInput(params){
+		return params;
+	}
+
 	updateResults(params){
 		return params;
 	}
