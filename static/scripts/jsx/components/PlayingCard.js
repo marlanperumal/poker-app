@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
-import {redA700, grey800, redA400} from 'material-ui/styles/colors';
+import {grey800, redA400} from 'material-ui/styles/colors';
 import CardActions from '../actions/CardActions';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 
 class PlayingCard extends Component{
 	constructor(props, context){
@@ -33,6 +29,14 @@ class PlayingCard extends Component{
 		    },
 		    black_suit: {
 		        color: grey800
+		    },
+		    suit_selector: {
+		    	minWidth: 20,
+		    	width: 40,
+		    	margin: 5
+		    },
+		    button_label: {
+		    	padding: 0
 		    }
 		}
 		this.rank_symbols = {
@@ -50,9 +54,6 @@ class PlayingCard extends Component{
 			"queen" : "Q",
 			"king" : "K"
 		}
-		this.state = {
-			open: false,
-		};
 	}
 
 	render(){
@@ -84,102 +85,24 @@ class PlayingCard extends Component{
 					<Paper onTouchTap={() => this._deselectCard()} style={this.styles.card} zDepth={3}>
 		                <div style={this.styles.card_contents}>
 		                    <span style={suit_style}>{rank_symbol}</span>
-		                    <span className="red-suit" style={suit_style}>{suit_symbol}</span>
+		                    <span style={suit_style}>{suit_symbol}</span>
 		                </div>
 		            </Paper>
 	            </div>
 			);	
 		}
 		else{
-			const actions = [
-		      <FlatButton
-		        label="Cancel"
-		        primary={true}
-		        onTouchTap={() => this._closeCardSelector()}
-		      />,
-		      <FlatButton
-		        label="Submit"
-		        primary={true}
-		        onTouchTap={() => this._selectCard()}
-		      />,
-		    ];
 			return(
 				<div>
-					<Paper onTouchTap={() => this._openCardSelector()} style={this.styles.card} zDepth={1}>
+					<Paper onTouchTap={() => this._selectCard()} style={this.styles.card} zDepth={1}>
 						<div className="card-back" style={this.styles.card_back}>
 							&nbsp;
 						</div>
 					</Paper>
-					<Dialog
-			        	title="Select Card"
-			        	actions={actions}
-			        	modal={true}
-			        	open={this.props.card.cardSelectorOpen}
-			        >
-			        	<div>
-			        		<div>
-					        	<SelectField 
-					        		floatingLabelText="Rank"
-					        		floatingLabelFixed={true}
-					        		hintText="Ace"
-					        		value={this.props.card.rank}
-					        		onChange={(event, index, value) => this._changeRank(value)}
-					        		style={{width:220}}
-					        	>
-					        		<MenuItem key={1} value={"Ace"} secondaryText="Ace" primaryText="A"/>
-					        		<MenuItem key={2} value={"King"} secondaryText="King" primaryText="K"/>
-					        		<MenuItem key={3} value={"Queen"} secondaryText="Queen" primaryText="Q"/>
-					        		<MenuItem key={4} value={"Jack"} secondaryText="Jack" primaryText="J"/>
-					        		<MenuItem key={5} value={"Ten"} secondaryText="Ten" primaryText="10"/>
-					        		<MenuItem key={6} value={"Nine"} secondaryText="Nine" primaryText="9"/>
-					        		<MenuItem key={7} value={"Eight"} secondaryText="Eight" primaryText="8"/>
-					        		<MenuItem key={8} value={"Seven"} secondaryText="Seven" primaryText="7"/>
-					        		<MenuItem key={9} value={"Six"} secondaryText="Six" primaryText="6"/>
-					        		<MenuItem key={10} value={"Five"} secondaryText="Five" primaryText="5"/>
-					        		<MenuItem key={11} value={"Four"} secondaryText="Four" primaryText="4"/>
-					        		<MenuItem key={12} value={"Three"} secondaryText="Three" primaryText="3"/>
-					        		<MenuItem key={13} value={"Two"} secondaryText="Two" primaryText="2"/>
-					        	</SelectField>
-				        	</div>
-				        	{
-				        	// <div className="select-suit-container">
-			        		// 	<span data-selected={this.props.card.suit == "Diamonds"} data-value={"Diamonds"}>&diams;</span>
-			        		// 	<span data-selected={this.props.card.suit == "Hearts"} data-value={"Hearts"}>&hearts;</span>
-			        		// 	<span data-selected={this.props.card.suit == "Clubs"} data-value={"Clubs"}>&clubs;</span>
-			        		// 	<span data-selected={this.props.card.suit == "Spades"} data-value={"Spades"}>&spades;</span>
-			        		// </div>
-		        			}
-
-
-				        	
-				        	<SelectField 
-				        		floatingLabelText="Suit"
-				        		floatingLabelFixed={true}
-				        		hintText="Spades"
-				        		value={this.props.card.suit}
-				        		onChange={(event, index, value) => this._changeSuit(value)}
-				        		style={{width:220}}
-				        	>
-				        		<MenuItem key={1} value={"Diamonds"} primaryText="Diamonds" secondaryText="&diams;"/>
-				        		<MenuItem key={2} value={"Hearts"} primaryText="Hearts" secondaryText="&hearts;"/>
-				        		<MenuItem key={3} value={"Clubs"} primaryText="Clubs" secondaryText="&clubs;"/>
-				        		<MenuItem key={4} value={"Spades"} primaryText="Spades" secondaryText="&spades;"/>
-				        	</SelectField>
-				        	
-			        	</div>
-			        </Dialog>
 		        </div>
 			);
 		}
 		
-	}
-
-	_openCardSelector(){
-		CardActions.openCardSelector({card: this.props.card});
-	}
-
-	_closeCardSelector(){
-		CardActions.closeCardSelector({card: this.props.card});
 	}
 
 	_selectCard(){

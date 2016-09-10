@@ -13,6 +13,7 @@ import Chip from 'material-ui/Chip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import HardwareComputer from 'material-ui/svg-icons/hardware/computer';
 import PlayingCard from './PlayingCard';
+import CardSelector from './CardSelector';
 import ApplicationStore from '../stores/ApplicationStore';
 import CardActions from '../actions/CardActions';
 
@@ -50,16 +51,6 @@ const styles = {
     fab: {
 
     },
-    suit_avatar: {
-        margin: 5,
-        fontSize: 20
-    },
-    red_suit: {
-        color: redA400
-    },
-    black_suit: {
-        color: grey800
-    }
 };
 
 class App extends Component{
@@ -90,7 +81,11 @@ class App extends Component{
     }
 
     handleRunSim(){
-        CardActions.runSim({holeCards: this.state.holeCards, communityCards: this.state.communityCards, numPlayers: this.state.numPlayers});
+        CardActions.runSim({
+            holeCards: this.state.holeCards, 
+            communityCards: this.state.communityCards, 
+            numPlayers: this.state.numPlayers
+        });
     }
 
     onChange(state){
@@ -102,12 +97,13 @@ class App extends Component{
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <AppBar title="Poker Simulator" onLeftIconButtonTouchTap={this.handleToggleDrawer}/>
+                    <CardSelector cardSelector={this.state.cardSelector} />
                     <div style={styles.card_row}>
                         <div style={styles.card_slot}>
                             <Paper style={styles.card} zDepth={0}>
                                 <Chip style={styles.chip}>{this.state.numPlayers} Players</Chip>
                                 <Chip style={styles.chip}>Win%: {(this.state.result.win_percent*100).toPrecision(2)}</Chip>
-                                <Chip style={styles.chip}>RHS: {this.state.result.rhs.toPrecision(3)}</Chip>
+                                <Chip style={styles.chip}>RHS: {this.state.result.rhs.toFixed(2)}</Chip>
                             </Paper>
                         </div>
                         <div style={styles.card_slot}>
@@ -143,7 +139,7 @@ class App extends Component{
                         <div style={styles.card_slot}>
                             <Paper style={styles.card} zDepth={0}>
                                 <div style={styles.card_contents}>
-                                    <FloatingActionButton onTouchTap={this.handleRunSim.bind(this)} style={styles.fab} size={50}>
+                                    <FloatingActionButton onTouchTap={() => this.handleRunSim()} style={styles.fab} size={50}>
                                         <HardwareComputer />
                                     </FloatingActionButton>
                                 </div>

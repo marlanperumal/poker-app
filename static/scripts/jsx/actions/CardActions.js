@@ -9,10 +9,6 @@ class CardActions {
 		return params;
 	}
 
-	openCardSelector(params){
-		return params;
-	}
-
 	closeCardSelector(params){
 		return params;
 	}
@@ -46,8 +42,6 @@ class CardActions {
 		communityCards = communityCards.filter(function(card){
 			return card !== undefined;
 		});
-		console.log(holeCards);
-		console.log(communityCards);
 		var req = {
 			hole_cards: holeCards,
 			community_cards: communityCards,
