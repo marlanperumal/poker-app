@@ -1,11 +1,15 @@
 import alt from '../alt';
 import CardActions from '../actions/CardActions';
+import AppActions from '../actions/AppActions';
 
 class ApplicationStore {
 	constructor(){
 		this.holeCards = [];
 		this.communityCards = [];
 		this.numPlayers = 5;
+		this.drawer = {
+			open: false
+		}
 		this.cardSelector = {
 			card: undefined,
 			suit: undefined,
@@ -13,7 +17,7 @@ class ApplicationStore {
 			open: false
 		}
 		this.result = {
-			win_percent: 0.25,
+			win_percent: 1/this.numPlayers,
 			rhs: 1
 		}
 
@@ -22,7 +26,6 @@ class ApplicationStore {
 				revealed: false,
 				rank: undefined,
 				suit: undefined,
-				cardSelectorOpen: false,
 			})
 		}
 
@@ -31,7 +34,6 @@ class ApplicationStore {
 				revealed: false,
 				rank: undefined,
 				suit: undefined,
-				cardSelectorOpen: false,
 			})
 		}
 		this.bindListeners({
@@ -40,8 +42,11 @@ class ApplicationStore {
 			onCloseCardSelector: CardActions.closeCardSelector,
 			onChangeRank: CardActions.changeRank,
 			onChangeSuit: CardActions.changeSuit,
-			onRunSim: CardActions.runSim,
-			onUpdateResults: CardActions.updateResults,
+			onRunSim: AppActions.runSim,
+			onUpdateResults: AppActions.updateResults,
+			onToggleDrawer: AppActions.toggleDrawer,
+			onClearHand: AppActions.clearHand,
+			onChangeNumPlayers: AppActions.changeNumPlayers
 		});
 	}
 
@@ -102,6 +107,21 @@ class ApplicationStore {
 	onUpdateResults(params){
 		this.result.win_percent = params["win percentage"];
 		this.result.rhs = params["relative hand strength"];
+	}
+
+	onToggleDrawer(params){
+		this.drawer.open = !this.drawer.open;
+	}
+
+	onClearHand(params){
+		this.holeCards.forEach((card) => this.onDeselectCard({card: card}));
+		this.communityCards.forEach((card) => this.onDeselectCard({card: card}));
+		this.drawer.open = false;
+	}
+
+	onChangeNumPlayers(params){
+		this.numPlayers = params.numPlayers;
+		this.drawer.open = false;
 	}
 
 }
