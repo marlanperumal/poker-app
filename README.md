@@ -19,9 +19,9 @@ These instructions assume you have python, virtualenvwrapper and node installed.
 
 2. Create a new virtual environment 
 
-		mkvirtualenv poker
+		mkvirtualenv poker --python=python3
 
-3. Activate the virtual environment 
+3. If your virtual environment is not immediately activated, enter it with 
 
 		workon poker
 
