@@ -1,10 +1,11 @@
 module.exports = {
-    entry: [
-        "./static/scripts/jsx/main.js",
-    ],
+    entry: {
+        main: "./static/scripts/jsx/main.js",
+        sandbox: "./static/scripts/jsx/sandbox.js"
+    },
     output: {
         path: "./static/scripts/js",
-        filename: "main.js"
+        filename: "[name].js"
     },
     module: {
         loaders: [{

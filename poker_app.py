@@ -35,6 +35,10 @@ def favicon():
 def hello():
     return render_template("index.html")
 
+@app.route("/sandbox/")
+def sandbox():
+    return render_template("sandbox.html")
+
 
 @app.route("/api/handprob/<short_code>")
 def api_handprob_short_code(short_code):
